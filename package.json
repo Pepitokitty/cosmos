@@ -1,0 +1,28 @@
+{
+  "name": "@kyve/cosmos",
+  "version": "0.0.0",
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc",
+    "build:binaries": "tsc && pkg ./dist/src/index.js --out-path out",
+    "start": "node ./dist/src/index.js",
+    "format": "prettier --write ."
+  },
+  "dependencies": {
+    "@kyve/core": "^0.0.13",
+    "axios": "^0.24.0",
+    "commander": "^8.3.0",
+    "object-hash": "^2.2.0",
+    "ws": "^8.2.3"
+  },
+  "devDependencies": {
+    "@types/node": "^16.11.6",
+    "@types/object-hash": "^2.2.1",
+    "@types/ws": "^8.2.0",
+    "pkg": "^5.4.1",
+    "prettier": "^2.4.1",
+    "tslog": "^3.2.2",
+    "typescript": "^4.4.4",
+    "webhook-discord": "^3.7.8"
+  }
+}
