@@ -5,7 +5,7 @@ import WebSocket from "ws";
 import { ConfigType } from "./faces";
 
 const uploadFunction = (
-  subscriber: UploadFunctionSubscriber,
+  uploader: UploadFunctionSubscriber,
   config: ConfigType,
   logger: Logger
 ) => {
@@ -49,13 +49,11 @@ const uploadFunction = (
       const res = await axios.get(`${config.rpc}/block?height=${height}`);
 
       const tags = [
-        // @ts-ignore
         { name: "Block", value: res.data.result.block_id.hash },
         { name: "Height", value: height },
       ];
 
-      // @ts-ignore
-      subscriber.next({ data: JSON.stringify(res.data.result), tags });
+      uploader.upload({ data: JSON.stringify(res.data.result), tags });
     });
   };
 

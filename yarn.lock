@@ -361,14 +361,15 @@
     "@ethersproject/properties" "^5.5.0"
     "@ethersproject/strings" "^5.5.0"
 
-"@kyve/core@^0.0.13":
-  version "0.0.13"
-  resolved "https://registry.yarnpkg.com/@kyve/core/-/core-0.0.13.tgz#2137b4381714e63d3d63842cbaafafaca3b6c273"
-  integrity sha512-d2tK91iPnRQAWeFrGY2a3VYE2CKccmLdnDNeTg1uwhqJV6u/VFILaBha6jm2cr8JSdoAWEfn/dNaF9zOJMc/6A==
+"@kyve/core@^0.1.0":
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/@kyve/core/-/core-0.1.0.tgz#7bf065674a0682b3b92dfd95809a11c8edbd22db"
+  integrity sha512-LgkLDiJZM39V+p3ERjBsfxfDFZfCA12xMF/kYbWZa7slLLS6XYUS5CHvL3fbHL+QMt0Z96H57V/79wb4Hdhf+w==
   dependencies:
     arweave "^1.10.17"
     base64url "^3.0.1"
     bignumber.js "^9.0.1"
+    commander "^8.3.0"
     ethers "^5.5.1"
     prando "^6.0.1"
     rxjs "^7.4.0"

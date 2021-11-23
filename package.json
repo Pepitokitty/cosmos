@@ -1,17 +1,16 @@
 {
   "name": "@kyve/cosmos",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "license": "MIT",
   "scripts": {
     "build": "tsc",
-    "build:binaries": "tsc && pkg ./dist/src/index.js --out-path out",
+    "build:binaries": "yarn build && pkg ./dist/src/index.js --targets latest-linux-x64,latest-macos-x64,latest-win-x64 --out-path out",
     "start": "node ./dist/src/index.js",
     "format": "prettier --write ."
   },
   "dependencies": {
-    "@kyve/core": "^0.0.13",
+    "@kyve/core": "^0.1.0",
     "axios": "^0.24.0",
-    "commander": "^8.3.0",
     "object-hash": "^2.2.0",
     "ws": "^8.2.3"
   },
