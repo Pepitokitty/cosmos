@@ -50,8 +50,10 @@ class KyveCosmos extends KYVE {
 
     const batch = await Promise.all(promises);
 
+    console.log("batch", batch.length);
+
     return batch.map((b) => ({
-      key: b.number,
+      key: b.header.height,
       value: b,
     }));
   }
