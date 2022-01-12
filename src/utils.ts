@@ -14,9 +14,7 @@ export class Provider {
           `${this.endpoint}/block?height=${height}`
         );
         return data.result.block;
-      } catch (error) {
-        console.log(error);
-      }
+      } catch {}
     }
   }
 
@@ -25,9 +23,7 @@ export class Provider {
       try {
         const { data } = await axios.get(`${this.endpoint}/status`);
         return data.result.sync_info.latest_block_height;
-      } catch (error) {
-        console.log(error);
-      }
+      } catch {}
     }
   }
 }
