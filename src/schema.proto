@@ -1,0 +1,113 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+import "kyve/protobuf/block_id.proto";
+import "kyve/protobuf/commit.proto";
+
+message Header {
+  message Consensus {
+    uint64 block = 1;
+    uint64 app = 2;
+  }
+
+	Consensus version = 1;
+	string chain_id = 2;
+	int64 height = 3;
+	google.protobuf.Timestamp time = 4;
+	kyve.protobuf.BlockID last_block_id = 5;
+	bytes last_commit_hash = 6;
+	bytes data_hash = 7;
+	bytes validators_hash = 8;
+	bytes next_validators_hash = 9;
+	bytes consensus_hash = 10;
+	bytes app_hash = 11;
+	bytes last_results_hash = 12;
+	bytes evidence_hash = 13;
+	bytes proposer_address = 14;
+}
+
+message Data {
+  repeated bytes txs = 1;
+}
+
+message EvidenceList {
+  enum SignedMsgType {
+    SIGNED_MSG_TYPE_UNKNOWN = 0;
+    SIGNED_MSG_TYPE_PREVOTE = 1;
+    SIGNED_MSG_TYPE_PRECOMMIT = 2;
+    SIGNED_MSG_TYPE_PROPOSAL = 32;
+  }
+
+  message Vote {
+    SignedMsgType type = 1;
+    int64 height = 2;
+    int32 round = 3;
+    kyve.protobuf.BlockID block_id = 4;
+    google.protobuf.Timestamp timestamp = 5;
+    bytes validator_address = 6;
+    int32 validator_index = 7;
+    bytes signature = 8;
+  }
+
+  message DuplicateVoteEvidence {
+    Vote vote_a = 1;
+    Vote vote_b = 2;
+    int64 total_voting_power = 3;
+    int64 validator_power = 4;
+    google.protobuf.Timestamp timestamp = 5;
+  }
+
+  message SignedHeader {
+    Header header = 1;
+    kyve.protobuf.Commit commit = 2;
+  }
+
+  message ValidatorSet {
+    repeated Validator validators = 1;
+    Validator proposer = 2;
+    int64 total_voting_power = 3;
+  }
+
+  message LightBlock {
+    SignedHeader signed_header = 1;
+    ValidatorSet validator_set = 2;
+  }
+
+  message PublicKey {
+    oneof sum {
+      bytes ed25519 = 1;
+      bytes secp256k1 = 2;
+    }
+  }
+
+  message Validator {
+    bytes address = 1;
+    PublicKey pub_key = 2;
+    int64 voting_power = 3;
+    int64 proposer_priority = 4;
+  }
+
+  message LightClientAttackEvidence {
+    LightBlock conflicting_block = 1;
+    int64 common_height = 2;
+    repeated Validator byzantine_validators = 3;
+    int64 total_voting_power = 4;
+    google.protobuf.Timestamp timestamp = 5;
+  }
+
+  message Evidence {
+    oneof sum {
+      DuplicateVoteEvidence duplicate_vote_evidence = 1;
+      LightClientAttackEvidence light_client_attack_evidence = 2;
+    }
+  }
+
+  repeated Evidence evidence = 1;
+}
+
+message Block {
+  Header header = 1;
+	Data data = 2;
+	EvidenceList evidence = 3;
+	kyve.protobuf.Commit last_commit = 4;
+}

@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+package kyve.protobuf;
+
+import "google/protobuf/timestamp.proto";
+import "kyve/protobuf/block_id.proto";
+
+message Commit {
+  enum BlockIDFlag {
+    BLOCK_ID_FLAG_UNKNOWN = 0;
+    BLOCK_ID_FLAG_ABSENT = 1;
+    BLOCK_ID_FLAG_COMMIT = 2;
+    BLOCK_ID_FLAG_NIL = 3;
+  }
+
+  message CommitSig {
+    BlockIDFlag block_id_flag = 1;
+    bytes validator_address = 2;
+    google.protobuf.Timestamp timestamp = 3;
+    bytes signature = 4;
+  }
+
+  int64 height = 1;
+  int32 round = 2;
+  kyve.protobuf.BlockID block_id = 3;
+  repeated CommitSig signatures = 4;
+}

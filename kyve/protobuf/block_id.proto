@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+package kyve.protobuf;
+
+message BlockID {
+  message PartSetHeader {
+    uint32 total = 1;
+    bytes hash = 2;
+  }
+
+  bytes hash = 1;
+  PartSetHeader part_set_header = 2;
+}
