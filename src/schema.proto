@@ -2,9 +2,29 @@
 
 syntax = "proto3";
 
-import "google/protobuf/timestamp.proto";
-import "kyve/protobuf/block_id.proto";
-import "kyve/protobuf/commit.proto";
+message BlockID {
+  message PartSetHeader {
+    uint32 total = 1;
+    bytes hash = 2;
+  }
+
+  bytes hash = 1;
+  PartSetHeader parts = 2;
+}
+
+message Commit {
+  message CommitSig {
+    int32 block_id_flag = 1;
+    bytes validator_address = 2;
+    string timestamp = 3;
+    bytes signature = 4;
+  }
+
+  int64 height = 1;
+  int32 round = 2;
+  BlockID block_id = 3;
+  repeated CommitSig signatures = 4;
+}
 
 message Header {
   message Consensus {
@@ -15,8 +35,8 @@ message Header {
   Consensus version = 1;
   string chain_id = 2;
   int64 height = 3;
-  google.protobuf.Timestamp time = 4;
-  kyve.protobuf.BlockID last_block_id = 5;
+  string time = 4;
+  BlockID last_block_id = 5;
   bytes last_commit_hash = 6;
   bytes data_hash = 7;
   bytes validators_hash = 8;
@@ -44,8 +64,8 @@ message EvidenceList {
     SignedMsgType type = 1;
     int64 height = 2;
     int32 round = 3;
-    kyve.protobuf.BlockID block_id = 4;
-    google.protobuf.Timestamp timestamp = 5;
+    BlockID block_id = 4;
+    string timestamp = 5;
     bytes validator_address = 6;
     int32 validator_index = 7;
     bytes signature = 8;
@@ -56,12 +76,12 @@ message EvidenceList {
     Vote vote_b = 2;
     int64 total_voting_power = 3;
     int64 validator_power = 4;
-    google.protobuf.Timestamp timestamp = 5;
+    string timestamp = 5;
   }
 
   message SignedHeader {
     Header header = 1;
-    kyve.protobuf.Commit commit = 2;
+    Commit commit = 2;
   }
 
   message ValidatorSet {
@@ -94,7 +114,7 @@ message EvidenceList {
     int64 common_height = 2;
     repeated Validator byzantine_validators = 3;
     int64 total_voting_power = 4;
-    google.protobuf.Timestamp timestamp = 5;
+    string timestamp = 5;
   }
 
   message Evidence {
@@ -111,5 +131,5 @@ message Block {
   Header header = 1;
   Data data = 2;
   EvidenceList evidence = 3;
-  kyve.protobuf.Commit last_commit = 4;
+  Commit last_commit = 4;
 }
