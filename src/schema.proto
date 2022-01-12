@@ -1,3 +1,5 @@
+// https://buf.build/cosmos/cosmos-sdk
+
 syntax = "proto3";
 
 import "google/protobuf/timestamp.proto";
@@ -10,20 +12,20 @@ message Header {
     uint64 app = 2;
   }
 
-	Consensus version = 1;
-	string chain_id = 2;
-	int64 height = 3;
-	google.protobuf.Timestamp time = 4;
-	kyve.protobuf.BlockID last_block_id = 5;
-	bytes last_commit_hash = 6;
-	bytes data_hash = 7;
-	bytes validators_hash = 8;
-	bytes next_validators_hash = 9;
-	bytes consensus_hash = 10;
-	bytes app_hash = 11;
-	bytes last_results_hash = 12;
-	bytes evidence_hash = 13;
-	bytes proposer_address = 14;
+  Consensus version = 1;
+  string chain_id = 2;
+  int64 height = 3;
+  google.protobuf.Timestamp time = 4;
+  kyve.protobuf.BlockID last_block_id = 5;
+  bytes last_commit_hash = 6;
+  bytes data_hash = 7;
+  bytes validators_hash = 8;
+  bytes next_validators_hash = 9;
+  bytes consensus_hash = 10;
+  bytes app_hash = 11;
+  bytes last_results_hash = 12;
+  bytes evidence_hash = 13;
+  bytes proposer_address = 14;
 }
 
 message Data {
@@ -107,7 +109,7 @@ message EvidenceList {
 
 message Block {
   Header header = 1;
-	Data data = 2;
-	EvidenceList evidence = 3;
-	kyve.protobuf.Commit last_commit = 4;
+  Data data = 2;
+  EvidenceList evidence = 3;
+  kyve.protobuf.Commit last_commit = 4;
 }
