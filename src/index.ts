@@ -7,8 +7,6 @@ import KYVE, {
   Progress,
   sleep,
 } from "@kyve/core";
-import path from "path";
-import { Root, Type } from "protobufjs";
 import { Provider } from "./utils";
 import { version } from "../package.json";
 
@@ -20,16 +18,6 @@ KYVE.metrics.register.setDefaultLabels({
 });
 
 class KyveCosmos extends KYVE {
-  type: Type;
-
-  constructor() {
-    super();
-
-    const root = new Root();
-    root.loadSync(path.join(__dirname, "schema.proto"), { keepCase: true });
-    this.type = root.lookupType("Block");
-  }
-
   public async requestWorkerBatch(workerHeight: number): Promise<any[]> {
     const batchSize = 100;
     const rateLimit = 10;
@@ -77,7 +65,7 @@ class KyveCosmos extends KYVE {
     while (true) {
       try {
         const block = await this.db.get(h);
-        const encodedBlock = this.type.encode(block).finish();
+        const encodedBlock = Buffer.from(JSON.stringify(block));
         currentDataSize += encodedBlock.byteLength + 32;
 
         if (
@@ -120,7 +108,7 @@ class KyveCosmos extends KYVE {
     while (h < bundleProposal.toHeight) {
       try {
         const block = await this.db.get(h);
-        const encodedBlock = this.type.encode(block).finish();
+        const encodedBlock = Buffer.from(JSON.stringify(block));
 
         bundle.push(encodedBlock);
         h += 1;

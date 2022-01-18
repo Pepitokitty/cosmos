@@ -1,0 +1,56 @@
+type PartSetHeader {
+  total: Int
+  hash: String
+}
+
+type BlockID {
+  hash: String
+  parts: PartSetHeader
+}
+
+type Consensus {
+  block: String
+  app: String
+}
+
+type Header {
+  version: Consensus
+  chain_id: String
+  height: String
+  time: String
+  last_block_id: BlockID
+  last_commit_hash: String
+  data_hash: String
+  validators_hash: String
+  next_validators_hash: String
+  consensus_hash: String
+  app_hash: String
+  last_results_hash: String
+  evidence_hash: String
+  proposer_address: String
+}
+
+type Data {
+  txs: [String]
+}
+
+type CommitSig {
+  block_id_flag: Int
+  validator_address: String
+  timestamp: String
+  signature: String
+}
+
+type Commit {
+  height: String
+  round: Int
+  block_id: BlockID
+  signatures: [CommitSig]
+}
+
+type Block {
+  header: Header
+  data: Data
+  # TODO: evidence
+  last_commit: Commit
+}
